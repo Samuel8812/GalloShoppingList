@@ -1,0 +1,18 @@
+git config --global user.name Samuel8812
+git config --global user.email samuelbardelicanal@gmail.com
+
+-- Criar um projeto React Native Expo
+npx create-expo-app@latest GalloShoppingList --template blank
+
+--Restaurar i projeto
+cd GalloShoppingList
+npm i
+
+--Executar o projeto
+npx expo start
+npx expo start --android
+npx expo start --tunnel --android
+
+-- instalando os pacotes
+cd GalloShoppingList
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
