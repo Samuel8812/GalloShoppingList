@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import ItemList from '../components/ItemList';
 
 export default function Home() {
   const [textInput, setTextInput] = useState('');
@@ -34,6 +35,33 @@ export default function Home() {
     setItems([...items, newItem]);
     setTextInput('');
   }
+    function markProduto(itemId){
+      const newItems = items.map((item) => {
+        if (item.id == itemId){
+          return{...item, bought:true}
+        }
+        return item;
+      })
+      setItems(newItems);
+    }
+
+    function unmarkProduto(itemId){
+      const newItems = items.map((item) => {
+        if (item.id == itemId){
+          return{...item, bought: false }
+        }
+        return item;
+      })
+      setItems(newItems);
+    }
+
+    function removeProduto(itemId){
+
+    }
+    
+    function removeAll(){
+
+    }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
@@ -55,7 +83,11 @@ export default function Home() {
           data={items}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) =>
-            <Text>{item.name}</Text>
+            <ItemList>
+              item ={item}
+              markItem ={markProduto}
+              unmarkProduto ={unmarkProduto}
+            </ItemList>
           }
         />
 
