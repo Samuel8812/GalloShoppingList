@@ -3,11 +3,14 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 
-export default function ItemList({ item }) {
+export default function ItemList({ item, markProduto, unmarkProduto, removeProduto }) {
   return (
     <View style={styles.itemList}>
       <View style={{flex: 1}}>
-        <Text style={styles.itemToBuy}>{item?.name}</Text>
+        <Text style={[styles.itemToBuy,
+           item?.bought ? {textDecorationLine:'line-through'} : {textDecorationLine:'none'}]}>
+          {item?.name}
+          </Text>
       </View>
       {!item?.bought ? (
         <TouchableOpacity
