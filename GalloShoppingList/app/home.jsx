@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import {
   Alert,
   FlatList,
@@ -13,10 +13,40 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import ItemList from '../components/ItemList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
   const [textInput, setTextInput] = useState('');
   const [items, setItems] = useState([]);
+
+  useEffect (() =>{
+    getItemsFromDevice();
+  }, []);
+
+  useEffect (() =>{
+    saveItemToDevice();
+  }, [items]);
+
+  //Função para salvar a lista no storage do aparelho
+  const saveItemToDevice = async() =>{
+    try {
+      const itemJson = JSON.stringify(items);
+      await AsyncStorage.setItem('galloShoppingList', itemJson);
+    } catch (error) {
+      console.log(`Erro: ${error}`);
+    }
+  }
+  
+  //Função para buscar a lista no strage do caralho aparelho
+  const getItemsFromDevice = async () => {
+    try {
+      const items = await AsyncStorage.getItem('galloShoppingList');
+      if(item != null)
+        setItems(JSON.parse(items));
+    } catch (error) {
+      console.log(`Erro: ${error}`);
+    }
+  }
 
   function addProduto() {
     // console.log(textInput);
@@ -35,6 +65,7 @@ export default function Home() {
     setItems([...items, newItem]);
     setTextInput('');
   }
+
     function markProduto(itemId){
       const newItems = items.map((item) => {
         if (item.id == itemId){
